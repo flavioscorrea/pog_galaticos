@@ -2,6 +2,9 @@
   <po-toolbar p-title="Integra&ccedil;&atilde;o - Carol Clock In"></po-toolbar>
 
   <po-page-default>
+    <div>
+      <po-loading-overlay [hidden]="isHideLoading" [p-text]="loaderText"></po-loading-overlay>
+    </div>
     <div class="po-pull-right">
       
       <a href="config">
@@ -15,7 +18,6 @@
       <div class="po-font-subtitle"><p>Dispositivos</p></div>
 
       <po-divider></po-divider>
-
       
       <po-input class="po-md-6" name="totalDevices" [(ngModel)]="totalDevices" p-label="Total de dispositivos">
       </po-input>
@@ -23,8 +25,8 @@
       <po-input class="po-md-6" name="totalMark" [(ngModel)]="totalMark" p-label="Total de marcações">
       </po-input>
 
-       <po-input class="po-md-6" [(ngModel)]="filter" p-placeholder="Busca por nome" p-icon="po-icon po-icon-search" (p-blur)=search($event)></po-input>
-       <po-button class="po-md-6  po-sm-12" [p-disabled]="!buttonenable" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
+      <po-input class="po-md-6" [(ngModel)]="filter" p-placeholder="Busca por nome" p-icon="po-icon po-icon-search" (p-blur)=search($event)></po-input>
+      <po-button class="po-md-6  po-sm-12" [p-disabled]="!buttonenable" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
 
       <po-table
         p-container

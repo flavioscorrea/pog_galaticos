@@ -20,8 +20,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./home.component.css']
 })
 
-export class HomeComponent  implements OnInit {
-  
+export class HomeComponent implements OnInit {
+
   columns: Array<PoTableColumn> = this.infoDevices.getColumns();
   detail: any;
   items: Array<any> = [];
@@ -30,9 +30,11 @@ export class HomeComponent  implements OnInit {
   buttonenable = false;
   totalDevices: number = 0;
   totalMark: number = 0;
-  hasNext: boolean;  
+  hasNext: boolean;
   currentPage: number;
   filter: string;
+  isHideLoading: boolean = true;
+  loaderText: string = "Carregando";
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild(PoTableComponent, { static: true }) poTable: PoTableComponent;
@@ -42,14 +44,22 @@ export class HomeComponent  implements OnInit {
     private poNotification: PoNotificationService,
     private poDialog: PoDialogService,
     private router: Router
-  ) {}
+  ) { }
 
   async ngOnInit(): Promise<void> {
+
     this.setInitialCurrentPage();
+    this.LoaderShow();
     const { totalDevices, total } = await this.infoDevices.getDashboard();
     this.totalDevices = totalDevices;
+    this.LoaderHide();
     this.totalMark = total;
     await this.getAll();
+
+  }
+
+  ngOnDestroy(): void {
+    this.LoaderHide();
   }
 
   setInitialCurrentPage(): void {
@@ -64,30 +74,31 @@ export class HomeComponent  implements OnInit {
         title: 'Integração',
         message: `Integrar ${selectedItems.length} dispositivos?`,
         confirm: () => this.confirmItems(selectedItems),
-        cancel: () => {}
+        cancel: () => { }
       });
     }
   }
 
   async confirmItems(selectedItems: Array<any>) {
-    var markings: Devices_integration = {devices: Array<device_code>()};
+    var markings: Devices_integration = { devices: Array<device_code>() };
     selectedItems.forEach(item => {
-      const selected: device_code = {deviceCode: item.deviceCode};
+      const selected: device_code = { deviceCode: item.deviceCode };
       markings.devices.push(selected);
     });
     this.items.forEach(item => (item.$selected = false));
     try {
+      this.LoaderShow("Integrando marcações");
       const result = await this.infoDevices.integrationItems(markings);
-      console.log(result);
+      this.LoaderHide();
       this.showSuccessToaster("Marcações importados com sucesso!");
     } catch (error) {
       throw error;
-    } 
-    
+    }
+
   }
 
   config() {
-    this.router.navigate([ '/config' ])
+    this.router.navigate(['/config'])
   }
 
   async showMoreRegisters(): Promise<void> {
@@ -95,10 +106,10 @@ export class HomeComponent  implements OnInit {
   }
 
   async getNextPage(): Promise<void> {
-    if (this.hasNext) 
+    if (this.hasNext)
       this.currentPage++;
 
-      await this.getAll();
+    await this.getAll();
   }
 
   async search(e: any): Promise<void> {
@@ -106,17 +117,18 @@ export class HomeComponent  implements OnInit {
   }
 
   async getAll(reset = false): Promise<void> {
-
+    this.LoaderShow();
     if (reset) {
       this.currentPage = 1;
       this.items = [];
     }
-    const { items, hasNext }  = await this.infoDevices.getItems(this.filter,this.currentPage);
+    const { items, hasNext } = await this.infoDevices.getItems(this.filter, this.currentPage);
     this.items = this.items.concat(items);
     this.hasNext = hasNext;
+    this.LoaderHide();
   }
 
-  enablebutton(){
+  enablebutton() {
     const selectedItems = this.poTable.getSelectedRows();
     this.buttonenable = false;
     if (selectedItems.length > 0)
@@ -131,5 +143,17 @@ export class HomeComponent  implements OnInit {
       position: 0,
       duration: environment.toasterDuration,
     });
+  }
+
+  private LoaderShow(text:string = "Carregando")
+  {
+    this.loaderText = text;
+    this.isHideLoading = false;
+  }
+
+  private LoaderHide()
+  {
+    this.loaderText = "Carregando";
+    this.isHideLoading = true;
   }
 }
