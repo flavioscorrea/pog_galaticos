@@ -27,13 +27,10 @@ export class HomeComponent  implements OnInit {
   items: Array<any>;
   total: number = 0;
   totalExpanded = 0;
-<<<<<<< HEAD
   path: string;
-=======
   buttonenable = false;
   totalDevices: number = 0;
   totalMark: number = 0;
->>>>>>> d6c7b407d14f6771c0be4ecbdb6143f1d52d4f2f
   
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
