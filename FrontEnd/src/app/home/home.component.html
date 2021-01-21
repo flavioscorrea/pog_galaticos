@@ -1,18 +1,22 @@
 <div class="po-wrapper">
   <po-toolbar p-title="Integra&ccedil;&atilde;o - Carol Clock In"></po-toolbar>
-  <po-button class="po-md-6" po-icon="po-icon-settings" p-label="Configura&ccedil;&otilde;es" (p-click)="config()"> </po-button>
 
   <po-page-default>
-  
-    <p>Carga de Marca&ccedil;&otilde;es</p>
+    <div class="po-pull-right">
+      <po-button
+        class="po-md-12"
+        p-icon="po-icon-settings"
+        (p-click)="config()"
+      ></po-button>
+    </div>
+    
+    <div class="po-font-text-bold"><p>Carga de Marca&ccedil;&otilde;es</p></div>
 
     <po-container>
       
       <p>Dispositivos</p><br><br>
 
       <po-button class="po-md-4" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
-
-      <div class="po-font-text-bold">Teste de groselha</div>
 
       <po-divider></po-divider>
       
