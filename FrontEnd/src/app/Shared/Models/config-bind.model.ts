@@ -1,6 +1,6 @@
 
 export interface ConfigBind {
-    ActiveIntegration: string;
+    ActiveIntegration: boolean;
     EndPointUrl: string;
     EndPointPath: string;
     ConnectionId: string;
@@ -11,5 +11,5 @@ export interface ConfigBind {
     EndPointPathRecordList: string;
     OrganizationName: string;
     ApiToken: string;
-    reprocessNSR: string;
+    reprocessNSR: boolean;
   }
