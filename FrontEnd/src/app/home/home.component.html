@@ -3,22 +3,20 @@
 
   <po-page-default>
     <div class="po-pull-right">
-      <po-button
-        class="po-md-12"
-        p-icon="po-icon-settings"
-        (p-click)="config()"
-      ></po-button>
+      
+      <a href="config">
+        <!--<span class="po-icon po-icon-settings"></span>-->
+        <img class="fixed-background" src="../../../assets/img/engrenagem.png" height="25" width="25">
+      </a>
     </div>
-    
-    <div class="po-font-text-bold"><p>Carga de Marca&ccedil;&otilde;es</p></div>
+    <br><br>
 
     <po-container>
-      
-      <p>Dispositivos</p><br><br>
-
-      <po-button class="po-md-4" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
+      <div class="po-font-subtitle"><p>Dispositivos</p></div>
 
       <po-divider></po-divider>
+      <po-button class="po-md-4" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
+      <br><br>
       
       <po-table
         p-container
