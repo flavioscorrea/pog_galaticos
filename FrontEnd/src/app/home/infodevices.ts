@@ -34,4 +34,11 @@ export class InfoDevices {
       .toPromise();
       return devices;
   }
+
+  async getDashboard() {
+    const { totalDevices, total } = await this.integrationService
+      .getDashBoard()
+      .toPromise();
+      return { totalDevices, total };
+  }
 }

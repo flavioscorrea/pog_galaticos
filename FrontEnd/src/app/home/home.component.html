@@ -15,30 +15,32 @@
     <po-container>
       
       <div class="po-font-text-bold">Dispositivos</div>
-      
-      <br><br>
+    
+      <po-input class="po-md-6" name="totalDevices" [(ngModel)]="totalDevices" p-label="Total de dispositivos">
+      </po-input>
 
-      <div class="po-pull-right">
-        <po-button class="po-md-20" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
-      </div>
+      <po-input class="po-md-6" name="totalMark" [(ngModel)]="totalMark" p-label="Total de marcações">
+      </po-input>
 
-      <div class="po-row">
-        <po-table
-          p-container
-          p-height="400"
-          p-hide-select-all="false"
-          p-hide-text-overflow
-          p-selectable
-          p-sort="true"
-          p-striped="true"
-          p-show-more-disabled="true"
-          [p-columns]="columns"
-          [p-items]="items"
-          [p-max-columns]="6"
-          (p-show-more)="showMoreRegisters()"
-        >
-        </po-table>
-      </div>
+      <po-button class="po-md-4" [p-disabled]="!buttonenable" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
+
+      <po-table
+        p-container
+        p-height="400"
+        p-hide-select-all="false"
+        p-hide-text-overflow
+        p-selectable
+        p-sort="true"
+        p-striped="true"
+        p-show-more-disabled="true"
+        [p-columns]="columns"
+        [p-items]="items"
+        [p-max-columns]="6"
+        (p-show-more)="showMoreRegisters()"
+        (p-selected)="enablebutton()"
+        (p-unselected)="enablebutton()"
+      >
+      </po-table>
       
       <po-divider></po-divider>
 
