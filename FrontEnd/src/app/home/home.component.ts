@@ -1,5 +1,4 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
-
 import {
   PoDialogService,
   PoModalComponent,
@@ -8,14 +7,14 @@ import {
   PoTableComponent,
   PoNotificationService
 } from '@po-ui/ng-components';
-
-import { SampleDevices } from './sampledevices';
+import { InfoDevices } from './infodevices';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
+
 export class HomeComponent  implements OnInit {
   actions: Array<PoTableAction> = [
     {
@@ -28,7 +27,7 @@ export class HomeComponent  implements OnInit {
   ];
   columns: Array<PoTableColumn> = this.sampleDevices.getColumns();
   detail: any;
-  items: Array<any> = this.sampleDevices.getItems();
+  items: Array<any>;
   total: number = 0;
   totalExpanded = 0;
 
@@ -36,12 +35,14 @@ export class HomeComponent  implements OnInit {
   @ViewChild(PoTableComponent, { static: true }) poTable: PoTableComponent;
 
   constructor(
-    private sampleDevices: SampleDevices,
+    private sampleDevices: InfoDevices,
     private poNotification: PoNotificationService,
     private poDialog: PoDialogService
   ) {}
 
-  ngOnInit(): void {
+  
+  async ngOnInit(): Promise<void> {
+    this.items = await this.sampleDevices.getItems();
   }
 
   integrar() {
