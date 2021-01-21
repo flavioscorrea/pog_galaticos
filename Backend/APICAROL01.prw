@@ -190,7 +190,7 @@ Private lApiToken	:= .F.
 Private lGeraTokn	:= .F.
 Private lTemRR1		:= .F.
 
-aDisps := fDispBusc()
+aDisps := fDispBusc(, 1, 100000)
 
 If Empty(aDisps)
 	SetRestFault(404,EncodeUTF8(NoAcento(OemToAnsi("Dispositivos não cadastrados"))))
