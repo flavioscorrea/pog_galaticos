@@ -21,11 +21,11 @@ export class InfoDevices {
     ];
   }
 
-  async getItems() {
+  async getItems(filter:string , currentPage:number) {
     const { items, hasNext } = await this.integrationService
-      .getDevices("", 1)
+      .getDevices(filter, currentPage)
       .toPromise();
-    return items;
+    return { items, hasNext };
   }
 
   async integrationItems(items: Devices_integration) {

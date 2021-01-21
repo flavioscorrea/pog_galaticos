@@ -24,14 +24,15 @@ export class HomeComponent  implements OnInit {
   
   columns: Array<PoTableColumn> = this.infoDevices.getColumns();
   detail: any;
-  items: Array<any>;
+  items: Array<any> = [];
   total: number = 0;
   totalExpanded = 0;
-  path: string;
   buttonenable = false;
   totalDevices: number = 0;
   totalMark: number = 0;
-  
+  hasNext: boolean;  
+  currentPage: number;
+  filter: string;
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild(PoTableComponent, { static: true }) poTable: PoTableComponent;
@@ -44,10 +45,16 @@ export class HomeComponent  implements OnInit {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.setInitialCurrentPage();
     const { totalDevices, total } = await this.infoDevices.getDashboard();
     this.totalDevices = totalDevices;
     this.totalMark = total;
-    this.items = await this.infoDevices.getItems();
+    await this.getAll();
+  }
+
+  setInitialCurrentPage(): void {
+    this.currentPage = 1;
+    this.filter = '';
   }
 
   integrar() {
@@ -83,8 +90,30 @@ export class HomeComponent  implements OnInit {
     this.router.navigate([ '/config' ])
   }
 
-  showMoreRegisters(){
-    alert("xiiii")
+  async showMoreRegisters(): Promise<void> {
+    await this.getNextPage();
+  }
+
+  async getNextPage(): Promise<void> {
+    if (this.hasNext) 
+      this.currentPage++;
+
+      await this.getAll();
+  }
+
+  async search(e: any): Promise<void> {
+    await this.getAll(true);
+  }
+
+  async getAll(reset = false): Promise<void> {
+
+    if (reset) {
+      this.currentPage = 1;
+      this.items = [];
+    }
+    const { items, hasNext }  = await this.infoDevices.getItems(this.filter,this.currentPage);
+    this.items = this.items.concat(items);
+    this.hasNext = hasNext;
   }
 
   enablebutton(){

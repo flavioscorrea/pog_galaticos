@@ -22,14 +22,8 @@
       <po-input class="po-md-6" name="totalMark" [(ngModel)]="totalMark" p-label="Total de marcações">
       </po-input>
 
-      <div class="po-row">
-          <po-input class="po-md-6 po-sm-12"
-            name="path"
-            [(ngModel)]="path">
-          </po-input>
-
-          <po-button class="po-md-4  po-sm-12" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
-      </div>
+       <po-input class="po-md-6" [(ngModel)]="filter" p-placeholder="Busca por nome" p-icon="po-icon po-icon-search" (p-blur)=search($event)></po-input>
+       <po-button class="po-md-6  po-sm-12" [p-disabled]="!buttonenable" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
 
       <po-table
         p-container
@@ -39,7 +33,7 @@
         p-selectable
         p-sort="true"
         p-striped="true"
-        p-show-more-disabled="true"
+        [p-show-more-disabled]="!hasNext"
         [p-columns]="columns"
         [p-items]="items"
         [p-max-columns]="6"
