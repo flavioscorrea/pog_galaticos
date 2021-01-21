@@ -8,6 +8,7 @@ import {
   PoNotificationService
 } from '@po-ui/ng-components';
 import { InfoDevices } from './infodevices';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -37,7 +38,8 @@ export class HomeComponent  implements OnInit {
   constructor(
     private sampleDevices: InfoDevices,
     private poNotification: PoNotificationService,
-    private poDialog: PoDialogService
+    private poDialog: PoDialogService,
+    private router: Router
   ) {}
 
   
@@ -50,7 +52,7 @@ export class HomeComponent  implements OnInit {
   }
 
   config() {
-
+    this.router.navigate([ '/config' ])
   }
 
   collapseAll() {
