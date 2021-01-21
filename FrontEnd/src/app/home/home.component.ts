@@ -80,46 +80,6 @@ export class HomeComponent  implements OnInit {
     alert("xiiii")
   }
 
-  collapseAll() {
-    this.items.forEach((item, index) => {
-      if (item.detail) {
-        this.onCollapseDetail();
-        this.poTable.collapse(index);
-      }
-    });
-  }
-
-  decreaseTotal(row: any) {
-    if (row.value) {
-      this.total -= row.value;
-    }
-  }
-
-  expandAll() {
-    this.totalExpanded = 0;
-    this.items.forEach((item, index) => {
-      if (item.detail) {
-        this.onExpandDetail();
-        this.poTable.expand(index);
-      }
-    });
-  }
-
-  onCollapseDetail() {
-    this.totalExpanded -= 1;
-    this.totalExpanded = this.totalExpanded < 0 ? 0 : this.totalExpanded;
-  }
-
-  onExpandDetail() {
-    this.totalExpanded += 1;
-  }
-
-  sumTotal(row: any) {
-    if (row.value) {
-      this.total += row.value;
-    }
-  }
-
   private showSuccessToaster(message: string): void {
     this.poNotification.createToaster({
       message,
