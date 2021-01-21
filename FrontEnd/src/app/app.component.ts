@@ -12,8 +12,7 @@ export class AppComponent {
   constructor( private router: Router ) { }
 
   readonly menus: Array<PoMenuItem> = [
-    //{ label: 'Home', action: this.onClick.bind(this) }
-    { label: 'Início', link: 'home' }, { label: 'Config', link: 'config' }
+    { label: 'Início', link: 'home' }, { label: 'Configura\u00e7\u00e3o', link: 'config' }
   ];
 
   private onClick() {
