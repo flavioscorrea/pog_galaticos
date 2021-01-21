@@ -5,8 +5,12 @@ import {
   PoTableAction,
   PoTableColumn,
   PoTableComponent,
-  PoNotificationService
+  PoNotificationService,
+  PoToasterOrientation,
+  PoToasterType
 } from '@po-ui/ng-components';
+import { environment } from 'src/environments/environment';
+import { Devices_integration, device_code } from '../Shared/Models/devices.model';
 import { InfoDevices } from './infodevices';
 import { Router } from '@angular/router';
 
@@ -26,17 +30,18 @@ export class HomeComponent  implements OnInit {
     },
     { action: this.details.bind(this), icon: 'po-icon-info', label: 'Details' }
   ];
-  columns: Array<PoTableColumn> = this.sampleDevices.getColumns();
+  columns: Array<PoTableColumn> = this.infoDevices.getColumns();
   detail: any;
   items: Array<any>;
   total: number = 0;
   totalExpanded = 0;
+  
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild(PoTableComponent, { static: true }) poTable: PoTableComponent;
 
   constructor(
-    private sampleDevices: InfoDevices,
+    private infoDevices: InfoDevices,
     private poNotification: PoNotificationService,
     private poDialog: PoDialogService,
     private router: Router
@@ -44,11 +49,36 @@ export class HomeComponent  implements OnInit {
 
   
   async ngOnInit(): Promise<void> {
-    this.items = await this.sampleDevices.getItems();
+    this.items = await this.infoDevices.getItems();
   }
 
   integrar() {
+    const selectedItems = this.poTable.getSelectedRows();
+    if (selectedItems.length > 0) {
+      this.poDialog.confirm({
+        title: 'Integração',
+        message: `Integrar ${selectedItems.length} dispositivos?`,
+        confirm: () => this.confirmItems(selectedItems),
+        cancel: () => {}
+      });
+    }
+  }
 
+  async confirmItems(selectedItems: Array<any>) {
+    var markings: Devices_integration = {devices: Array<device_code>()};
+    selectedItems.forEach(item => {
+      const selected: device_code = {deviceCode: item.deviceCode};
+      markings.devices.push(selected);
+    });
+    this.items.forEach(item => (item.$selected = false));
+    try {
+      const result = await this.infoDevices.integrationItems(markings);
+      console.log(result);
+      this.showSuccessToaster("Marcações importados com sucesso!");
+    } catch (error) {
+      throw error;
+    } 
+    
   }
 
   config() {
@@ -113,5 +143,15 @@ export class HomeComponent  implements OnInit {
 
   private validateDiscount(item) {
     return item.disableDiscount;
+  }
+
+  private showSuccessToaster(message: string): void {
+    this.poNotification.createToaster({
+      message,
+      orientation: PoToasterOrientation.Top,
+      type: PoToasterType.Success,
+      position: 0,
+      duration: environment.toasterDuration,
+    });
   }
 }

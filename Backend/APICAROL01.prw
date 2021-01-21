@@ -47,7 +47,7 @@ WSRESTFUL IntegrationCarolClockin DESCRIPTION "Integração com Carol Clock in"
 	 PATH "/devices/markings" ; 
 	 PRODUCES 'application/json;charset=utf-8'
 
-	WSMETHOD POST fLoadMarkings ;
+	WSMETHOD POST fLoadMarking ;
 	 DESCRIPTION "Efetua carga das marcações na Carol Clock In por dispositivo";
 	 WSSYNTAX "/loadMarkings" ;
 	 PATH "/loadMarkings" ; 

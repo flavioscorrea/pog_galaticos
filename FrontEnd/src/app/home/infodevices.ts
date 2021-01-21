@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { PoTableColumn, PoTableDetail } from '@po-ui/ng-components';
 import { IntegrationService } from 'src/core/config/integration.service';
+import { Devices_integration } from '../Shared/Models/devices.model';
 
 @Injectable({ providedIn: 'root' })
 export class InfoDevices {
@@ -25,5 +26,12 @@ export class InfoDevices {
       .getDevices("", 1)
       .toPromise();
     return items;
+  }
+
+  async integrationItems(items: Devices_integration) {
+    const { devices } = await this.integrationService
+      .integrar(items)
+      .toPromise();
+      return devices;
   }
 }
