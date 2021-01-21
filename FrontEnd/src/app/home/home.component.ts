@@ -27,6 +27,7 @@ export class HomeComponent  implements OnInit {
   items: Array<any>;
   total: number = 0;
   totalExpanded = 0;
+  path: string;
   
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
@@ -76,10 +77,6 @@ export class HomeComponent  implements OnInit {
     this.router.navigate([ '/config' ])
   }
 
-  showMoreRegisters(){
-    alert("xiiii")
-  }
-
   collapseAll() {
     this.items.forEach((item, index) => {
       if (item.detail) {
@@ -118,6 +115,10 @@ export class HomeComponent  implements OnInit {
     if (row.value) {
       this.total += row.value;
     }
+  }
+
+  showMoreRegisters(){
+    alert("xiiii")
   }
 
   private showSuccessToaster(message: string): void {

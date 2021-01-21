@@ -18,8 +18,13 @@
       
       <br><br>
 
-      <div class="po-pull-right">
-        <po-button class="po-md-20" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
+      <div class="po-row">
+          <po-input class="po-md-6 po-sm-12"
+            name="path"
+            [(ngModel)]="path">
+          </po-input>
+
+          <po-button class="po-md-4  po-sm-12" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
       </div>
 
       <div class="po-row">
