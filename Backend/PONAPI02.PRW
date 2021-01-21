@@ -3,6 +3,6 @@
 
 Function PONAPI02()
 
-FWCallApp( "my-po-project" )
+FWCallApp( "integration-carol" )
 
 Return
