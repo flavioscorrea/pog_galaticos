@@ -21,15 +21,7 @@ import { Router } from '@angular/router';
 })
 
 export class HomeComponent  implements OnInit {
-  actions: Array<PoTableAction> = [
-    {
-      action: this.discount.bind(this),
-      icon: 'po-icon-finance',
-      label: 'Apply Discount',
-      disabled: this.validateDiscount.bind(this)
-    },
-    { action: this.details.bind(this), icon: 'po-icon-info', label: 'Details' }
-  ];
+  
   columns: Array<PoTableColumn> = this.infoDevices.getColumns();
   detail: any;
   items: Array<any>;
@@ -47,7 +39,6 @@ export class HomeComponent  implements OnInit {
     private router: Router
   ) {}
 
-  
   async ngOnInit(): Promise<void> {
     this.items = await this.infoDevices.getItems();
   }
@@ -85,6 +76,10 @@ export class HomeComponent  implements OnInit {
     this.router.navigate([ '/config' ])
   }
 
+  showMoreRegisters(){
+    alert("xiiii")
+  }
+
   collapseAll() {
     this.items.forEach((item, index) => {
       if (item.detail) {
@@ -97,18 +92,6 @@ export class HomeComponent  implements OnInit {
   decreaseTotal(row: any) {
     if (row.value) {
       this.total -= row.value;
-    }
-  }
-
-  details(item) {
-    this.detail = item;
-    this.poModal.open();
-  }
-
-  discount(item) {
-    if (!item.disableDiscount) {
-      item.value = item.value - item.value * 0.2;
-      item.disableDiscount = true;
     }
   }
 
@@ -135,14 +118,6 @@ export class HomeComponent  implements OnInit {
     if (row.value) {
       this.total += row.value;
     }
-  }
-
-  private getDescription(item: any) {
-    return `Airfare to ${item.destination} - ${item.initials}`;
-  }
-
-  private validateDiscount(item) {
-    return item.disableDiscount;
   }
 
   private showSuccessToaster(message: string): void {
