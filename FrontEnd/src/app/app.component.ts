@@ -13,7 +13,7 @@ export class AppComponent {
   constructor( private router: Router ) { }
 
   readonly menus: Array<PoMenuItem> = [
-    { label: 'Início', link: 'home' }, { label: 'Configura\u00e7\u00e3o', link: 'config' }
+    { label: 'Carga de Marca\u00e7\u00f5es', link: 'home' }, { label: 'Configura\u00e7\u00e3o', link: 'config' }
   ];
 
 }
