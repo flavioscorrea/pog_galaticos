@@ -502,7 +502,7 @@ Função que retorna a lista de dispositivos.
 /*/
 Function fDispBusc(deviceDescription, page, pagesize)
 Local cAuthlg	:= ""																//TOKEN DE ACESSO 
-Local cPageSize	:= "&pageSize=" + Alltrim(Str(pagesize))													//PARAMETRIZAÇÃO PADRÃO DA API DEVICELIST(QUANTIDADE DE REGISTROS QUE DEVERÃO RETORNAR)
+Local cPageSize	:= "&pageSize="												//PARAMETRIZAÇÃO PADRÃO DA API DEVICELIST(QUANTIDADE DE REGISTROS QUE DEVERÃO RETORNAR)
 Local cAsort	:= "&sortOrder=ASC"  												//PARAMETRIZAÇÃO PADRÃO DA API DEVICELIST(ORDENAÇÃO DOS REGISTROS)
 Local cIndexType:= "?indexType=MASTER" 												//PARAMETRIZAÇÃO PADRÃO DA API DEVICELIST(TIPO DE INDICE)
 Local cFields	:= "&fields=mdmGoldenFieldAndValues.devicecode,mdmGoldenFieldAndValues.devicedescription"  					//PARAMETRIZAÇÃO PADRÃO DA API DEVICELIST(CAMPOS)
@@ -522,6 +522,10 @@ Local oJson     := JsonObject():New()												//JSON QUE RECEBERÁ O RETORNO D
 Local oErro     := JsonObject():New()												//JSON QUE RECEBERÁ O RETORNO DA API
 Local oClient 	:= nil 																//OBJETO REST QUE SERÁ USADO NA REQUISIÇÃO
 	
+	If !Empty(pagesize)
+	 	cPageSize	:= "&pageSize=" + Alltrim(Str(pagesize))
+	EndIf 
+
 	if !Empty(deviceDescription)
 		cBody   := ""		
 		cBody += '{' 

@@ -12,3 +12,8 @@ export interface Devices {
   export interface device_code {
    deviceCode: string;
   }
+
+  export interface Total_Devices {
+   totalDevices: number;
+   total: number;
+  }
