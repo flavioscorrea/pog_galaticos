@@ -4,7 +4,7 @@ import { ConfigComponent } from './config/config.component';
 import { HomeComponent } from './home/home.component';
 
   const routes: Routes = [ 
-  { path: 'config', component: ConfigComponent }, { path: 'home', component: HomeComponent } ];
+  { path: '', component: HomeComponent }, { path: 'home', component: HomeComponent } , { path: 'config', component: ConfigComponent } ]
   @NgModule({
     imports: [RouterModule.forRoot(routes, {useHash: true})],
     exports: [RouterModule]
