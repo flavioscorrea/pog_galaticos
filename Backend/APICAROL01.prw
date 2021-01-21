@@ -190,14 +190,14 @@ Private lApiToken	:= .F.
 Private lGeraTokn	:= .F.
 Private lTemRR1		:= .F.
 
-aDisps := fDispBusc(, 1, 100000)
+aDisps := fDispBusc()
 
 If Empty(aDisps)
 	SetRestFault(404,EncodeUTF8(NoAcento(OemToAnsi("Dispositivos não cadastrados"))))
 	Return .F.
 EndIf
 
-For nI := 1 to Len(aDisps)
+For nI := 1 to Len(aDisps[3])
 	aDados := fMarcBusc(aDisps[3][nI][1],,,.F.,,.T.)
 	If aDados[1]
 		nTotalMarc += aDados[4]
@@ -205,6 +205,7 @@ For nI := 1 to Len(aDisps)
 Next	
 
 oRet["total"] := nTotalMarc
+oRet["totalDevices"] := Len(aDisps[3])
 
 cJson := FWJsonSerialize(oRet, .F., .F., .T.)
 Self:SetResponse(cJson)

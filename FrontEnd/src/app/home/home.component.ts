@@ -21,20 +21,16 @@ import { Router } from '@angular/router';
 })
 
 export class HomeComponent  implements OnInit {
-  actions: Array<PoTableAction> = [
-    {
-      action: this.discount.bind(this),
-      icon: 'po-icon-finance',
-      label: 'Apply Discount',
-      disabled: this.validateDiscount.bind(this)
-    },
-    { action: this.details.bind(this), icon: 'po-icon-info', label: 'Details' }
-  ];
+  
   columns: Array<PoTableColumn> = this.infoDevices.getColumns();
   detail: any;
   items: Array<any>;
   total: number = 0;
   totalExpanded = 0;
+  path: string;
+  buttonenable = false;
+  totalDevices: number = 0;
+  totalMark: number = 0;
   
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
@@ -47,8 +43,10 @@ export class HomeComponent  implements OnInit {
     private router: Router
   ) {}
 
-  
   async ngOnInit(): Promise<void> {
+    const { totalDevices, total } = await this.infoDevices.getDashboard();
+    this.totalDevices = totalDevices;
+    this.totalMark = total;
     this.items = await this.infoDevices.getItems();
   }
 
@@ -85,64 +83,15 @@ export class HomeComponent  implements OnInit {
     this.router.navigate([ '/config' ])
   }
 
-  collapseAll() {
-    this.items.forEach((item, index) => {
-      if (item.detail) {
-        this.onCollapseDetail();
-        this.poTable.collapse(index);
-      }
-    });
+  showMoreRegisters(){
+    alert("xiiii")
   }
 
-  decreaseTotal(row: any) {
-    if (row.value) {
-      this.total -= row.value;
-    }
-  }
-
-  details(item) {
-    this.detail = item;
-    this.poModal.open();
-  }
-
-  discount(item) {
-    if (!item.disableDiscount) {
-      item.value = item.value - item.value * 0.2;
-      item.disableDiscount = true;
-    }
-  }
-
-  expandAll() {
-    this.totalExpanded = 0;
-    this.items.forEach((item, index) => {
-      if (item.detail) {
-        this.onExpandDetail();
-        this.poTable.expand(index);
-      }
-    });
-  }
-
-  onCollapseDetail() {
-    this.totalExpanded -= 1;
-    this.totalExpanded = this.totalExpanded < 0 ? 0 : this.totalExpanded;
-  }
-
-  onExpandDetail() {
-    this.totalExpanded += 1;
-  }
-
-  sumTotal(row: any) {
-    if (row.value) {
-      this.total += row.value;
-    }
-  }
-
-  private getDescription(item: any) {
-    return `Airfare to ${item.destination} - ${item.initials}`;
-  }
-
-  private validateDiscount(item) {
-    return item.disableDiscount;
+  enablebutton(){
+    const selectedItems = this.poTable.getSelectedRows();
+    this.buttonenable = false;
+    if (selectedItems.length > 0)
+      this.buttonenable = true;
   }
 
   private showSuccessToaster(message: string): void {

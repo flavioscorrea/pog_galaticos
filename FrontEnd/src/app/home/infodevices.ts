@@ -15,9 +15,9 @@ export class InfoDevices {
   getColumns(): Array<PoTableColumn> {
 
     return [
-      { property: 'deviceCode', width: '150px' },
-      { property: 'deviceDescription', width: '150px' },
-      { property: 'count', width: '150px' }      
+      { property: 'deviceCode', label: "Código", width: '200px' },
+      { property: 'deviceDescription', label: "Descrição", width: '200px' },
+      { property: 'count', label: "Marcações pendentes", width: '200px' }      
     ];
   }
 
@@ -33,5 +33,12 @@ export class InfoDevices {
       .integrar(items)
       .toPromise();
       return devices;
+  }
+
+  async getDashboard() {
+    const { totalDevices, total } = await this.integrationService
+      .getDashBoard()
+      .toPromise();
+      return { totalDevices, total };
   }
 }

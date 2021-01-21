@@ -7,9 +7,18 @@
 			"name": "TOTVS Language Debug",
 			"program": "${command:AskForProgramName}",
 			"cwb": "${workspaceFolder}",
-			"smartclientBin": "C:\\Totvs\\Protheus12\\bin\\smartclient\\smartclient.exe",
+			"smartclientBin": "C:\\Totvs\\Ambientes\\P12_ROBO_27\\Protheus\\bin\\smartclient\\smartclient.exe",
 			"isMultiSession": true,
-			"enableTableSync": true
+			"enableTableSync": true,
+			"enableMultiThread": true
 		}
-	]
+	],
+	"lastPrograms": [
+		{
+			"args": [],
+			"label": "asdasd",
+			"description": ""
+		}
+	],
+	"lastProgramExecuted": "asdasd"
 }
