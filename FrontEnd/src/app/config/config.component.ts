@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { PoCheckboxGroupOption } from '@po-ui/ng-components';
-import { PoMenuItem } from '@po-ui/ng-components';
+import { 
+  PoCheckboxGroupOption,
+  PoNotificationService,
+  PoToasterOrientation,
+  PoToasterType } from '@po-ui/ng-components';
 import { ConfigService } from 'src/core/config/config.service';
+import { environment } from 'src/environments/environment';
 import { ConfigBind } from '../Shared/Models/config-bind.model';
 
 @Component({
@@ -21,35 +25,38 @@ export class ConfigComponent implements OnInit {
   pathclockin: string;
   nomeorg: string;
   codtoken: string;
-  reproc: boolean;
-  properties: Array<string>;
+  reproc: Array<string>;
 
-  public readonly propertiesOptions: Array<PoCheckboxGroupOption> = [
-    { value: "reproc", label: 'Reprocessar NSR' }
+
+  public readonly reprocOptions: Array<PoCheckboxGroupOption> = [
+    { label: 'Reprocessar NSR',value: "reproc" }
   ];
-
+  
   constructor(
     private configService: ConfigService,
+    private notification: PoNotificationService
   ) { }
   
   ngOnInit() {
-    this.properties = [];
     this.GetConfig();
   }
 
-  restore(lMsg) {
-    this.urlendpoint = undefined;
-    this.pathendpoint = undefined;
-    this.idacesso = undefined;
-    this.domacesso = undefined;
-    this.userendpoint = undefined;
-    this.senhaendpoint = undefined;
-    this.pathdevice = undefined;
-    this.pathclockin = undefined;
-    this.nomeorg = undefined;
-    this.codtoken = undefined;
-    this.properties = [];
-    
+  public async Update() {
+    this.config.EndPointUrl = this.urlendpoint;
+    this.config.EndPointPath = this.pathendpoint
+    this.config.ConnectionId = this.idacesso;
+    this.config.EndPointDomainName = this.domacesso;
+    this.config.EndPointUserName = this.userendpoint; 
+    this.config.EndPointPassword = this.senhaendpoint;
+    this.config.EndPointPathDeviceList = this.pathdevice;
+    this.config.EndPointPathRecordList = this.pathclockin;
+    this.config.OrganizationName = this.nomeorg;
+    this.config.ApiToken = this.codtoken;
+    this.config.reprocessNSR = false;
+   // if (this.config.reprocessNSR)
+     //   this.reproc = ['reproc'];
+     await this.configService.update(this.config);
+     this.showSuccessToaster("Configurações salvas com sucesso!");
   }
   
   private async GetConfig() {
@@ -66,6 +73,19 @@ export class ConfigComponent implements OnInit {
       this.pathclockin = this.config.EndPointPathRecordList;
       this.nomeorg = this.config.OrganizationName;
       this.codtoken = this.config.ApiToken;
-      //this.reproc = true;
+      this.reproc = [];
+      if (this.config.reprocessNSR)
+        this.reproc = ['reproc'];
+      
+  }
+
+  private showSuccessToaster(message: string): void {
+    this.notification.createToaster({
+      message,
+      orientation: PoToasterOrientation.Top,
+      type: PoToasterType.Success,
+      position: 0,
+      duration: environment.toasterDuration,
+    });
   }
 }
