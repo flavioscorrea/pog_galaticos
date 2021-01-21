@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PoCheckboxGroupOption } from '@po-ui/ng-components';
 import { PoMenuItem } from '@po-ui/ng-components';
+import { ConfigService } from 'src/core/config/config.service';
+import { ConfigBind } from '../Shared/Models/config-bind.model';
 
 @Component({
   selector: 'app-config',
@@ -8,6 +10,7 @@ import { PoMenuItem } from '@po-ui/ng-components';
   styleUrls: ['./config.component.css']
 })
 export class ConfigComponent implements OnInit {
+  config : ConfigBind;
   urlendpoint: string;
   pathendpoint: string;
   idacesso: string;
@@ -18,14 +21,20 @@ export class ConfigComponent implements OnInit {
   pathclockin: string;
   nomeorg: string;
   codtoken: string;
+  reproc: boolean;
   properties: Array<string>;
 
   public readonly propertiesOptions: Array<PoCheckboxGroupOption> = [
-    { value: 'reproc', label: 'Reprocessar NSR' }
+    { value: "reproc", label: 'Reprocessar NSR' }
   ];
 
+  constructor(
+    private configService: ConfigService,
+  ) { }
+  
   ngOnInit() {
-    this.restore(true);
+    this.properties = [];
+    this.GetConfig();
   }
 
   restore(lMsg) {
@@ -40,10 +49,23 @@ export class ConfigComponent implements OnInit {
     this.nomeorg = undefined;
     this.codtoken = undefined;
     this.properties = [];
-    if(lMsg){
-      alert('abriu!!!');
-    }else{
-      alert('Só Jesus salva!!!')
-    }
+    
+  }
+  
+  private async GetConfig() {
+  
+      this.config = await this.configService.getConfig();
+  
+      this.urlendpoint = this.config.EndPointUrl;
+      this.pathendpoint = this.config.EndPointPath;
+      this.idacesso = this.config.ConnectionId;
+      this.domacesso = this.config.EndPointDomainName;
+      this.userendpoint = this.config.EndPointUserName;
+      this.senhaendpoint = this.config.EndPointPassword;
+      this.pathdevice = this.config.EndPointPathDeviceList;
+      this.pathclockin = this.config.EndPointPathRecordList;
+      this.nomeorg = this.config.OrganizationName;
+      this.codtoken = this.config.ApiToken;
+      //this.reproc = true;
   }
 }
