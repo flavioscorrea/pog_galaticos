@@ -13,7 +13,7 @@ export class AppComponent {
 
   readonly menus: Array<PoMenuItem> = [
     //{ label: 'Home', action: this.onClick.bind(this) }
-    { label: 'Início', link: 'home' }, { label: 'Config', link: 'config' }
+    { label: 'InÃ­cio', link: 'home' }, { label: 'Config', link: 'config' }
   ];
 
   private onClick() {
@@ -25,7 +25,7 @@ export class AppComponent {
   }
 
   restore() {
-      //alert('Só Jesus salva!!!');
+      //alert('Sï¿½ Jesus salva!!!');
      // this.router.navigate([ '/config' ])
   }
 
