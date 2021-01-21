@@ -77,6 +77,7 @@ export class HomeComponent  implements OnInit {
     this.router.navigate([ '/config' ])
   }
 
+<<<<<<< HEAD
   collapseAll() {
     this.items.forEach((item, index) => {
       if (item.detail) {
@@ -117,6 +118,8 @@ export class HomeComponent  implements OnInit {
     }
   }
 
+=======
+>>>>>>> db7c34d9d715792fcf9af535dc6d176c089ec8d7
   showMoreRegisters(){
     alert("xiiii")
   }
