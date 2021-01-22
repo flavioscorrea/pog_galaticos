@@ -49,17 +49,21 @@ export class HomeComponent implements OnInit {
   async ngOnInit(): Promise<void> {
 
     this.setInitialCurrentPage();
-    this.LoaderShow();
-    const { totalDevices, total } = await this.infoDevices.getDashboard();
-    this.totalDevices = totalDevices;
-    this.LoaderHide();
-    this.totalMark = total;
+    await this.GetDash();
     await this.getAll();
 
   }
 
   ngOnDestroy(): void {
     this.LoaderHide();
+  }
+
+  private async GetDash() {
+    this.LoaderShow();
+    const { totalDevices, total } = await this.infoDevices.getDashboard();
+    this.totalDevices = totalDevices;
+    this.LoaderHide();
+    this.totalMark = total;
   }
 
   setInitialCurrentPage(): void {
@@ -89,8 +93,13 @@ export class HomeComponent implements OnInit {
     try {
       this.LoaderShow("Integrando marcações");
       const result = await this.infoDevices.integrationItems(markings);
+
       this.LoaderHide();
       this.showSuccessToaster("Marcações importados com sucesso!");
+      
+      await this.GetDash();
+      await this.getAll(true);
+
     } catch (error) {
       throw error;
     }
@@ -145,14 +154,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private LoaderShow(text:string = "Carregando")
-  {
+  private LoaderShow(text: string = "Carregando") {
     this.loaderText = text;
     this.isHideLoading = false;
   }
 
-  private LoaderHide()
-  {
+  private LoaderHide() {
     this.loaderText = "Carregando";
     this.isHideLoading = true;
   }
