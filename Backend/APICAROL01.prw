@@ -211,7 +211,7 @@ If Empty(aDisps[3])
 EndIf
 
 For nI := 1 to Len(aDisps[3])
-	aDados := fMarcBusc(aDisps[3][nI][1],,,.F.,,.T.)
+	aDados := fMarcBusc(aDisps[3][nI][1],,,.F.,,.F.)
 	If aDados[1]
 		If nI <= Self:pageSize
 			oItem  := &cJsonObj

@@ -359,9 +359,9 @@ Local lRepost	:= 0
 Local nUltNSR	:= 0
 Local nTot		:= 0
 
-Default lRetMarcs := .F.
+Default lRetMarcs := .T.
 
-If lRetMarcs
+If !lRetMarcs
 	cFields	:= '&fields=mdmGoldenFieldAndValues.nsrcode'
 EndIf
 
@@ -398,9 +398,11 @@ If !Empty(cAuthlg) .Or. lApiToken
 	cBody += '}'
 		
 	oClient:SetPostParams(cBody)
-		
-	cPageSize	:= "&pageSize=1000"
-		
+	If !lRetMarcs
+		cPageSize	:= "&pageSize=0"
+	Else	
+		cPageSize	:= "&pageSize=1000"
+	EndIf
 	oClient:SetPath(cURL + cAsort + cPageSize + cFields)
 	
 	If oClient:Post(aHeader) .And. at("totalHits",oClient:GetResult()) > 0
@@ -408,7 +410,7 @@ If !Empty(cAuthlg) .Or. lApiToken
 			lRet := .T.
 			cRet := oClient:GetResult()
 			oJson:fromJson(cRet)
-			If lRetMarcs
+			If !lRetMarcs
 				nTot := oJson["totalHits"]
 				Break
 			EndIf
