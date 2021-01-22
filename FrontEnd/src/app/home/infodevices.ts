@@ -1,44 +1,44 @@
 import { Injectable } from '@angular/core';
 
-import { PoTableColumn, PoTableDetail } from '@po-ui/ng-components';
+import { PoTableColumn } from '@po-ui/ng-components';
 import { IntegrationService } from 'src/core/config/integration.service';
-import { Devices_integration, Total_Devices } from '../Shared/Models/devices.model';
+import { DevicesIntegration } from '../Shared/Models/devices.model';
 
 @Injectable({ providedIn: 'root' })
 export class InfoDevices {
-  
+
   constructor(
     private integrationService: IntegrationService
-    
+
   ) { }
 
   getColumns(): Array<PoTableColumn> {
 
     return [
-      { property: 'deviceCode', label: "Código", width: '200px' },
-      { property: 'deviceDescription', label: "Descrição", width: '200px' },
-      { property: 'count', label: "Marcações pendentes", width: '200px' }      
+      { property: 'deviceCode', label: 'Código', width: '200px' },
+      { property: 'deviceDescription', label: 'Descrição', width: '200px' },
+      { property: 'count', label: 'Marcações pendentes', width: '200px' }
     ];
   }
 
-  async getItems(filter:string , currentPage:number) {
+  async getItems(filter: string, currentPage: number) {
     const { items, hasNext } = await this.integrationService
       .getDevices(filter, currentPage)
       .toPromise();
     return { items, hasNext };
   }
 
-  async integrationItems(items: Devices_integration) {
+  async integrationItems(items: DevicesIntegration) {
     const { devices } = await this.integrationService
       .integrar(items)
       .toPromise();
-      return devices;
+    return devices;
   }
 
   async getDashboard() {
-    var result = await this.integrationService
+    const result = await this.integrationService
       .getDashBoard()
       .toPromise();
-      return result;
+    return result;
   }
 }

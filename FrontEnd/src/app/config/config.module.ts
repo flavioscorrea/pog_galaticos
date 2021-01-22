@@ -4,7 +4,7 @@ import { PoModule } from '@po-ui/ng-components';
 import { ConfigRoutingModule } from './config-routing.module';
 import { RouterModule, Routes } from '@angular/router';
 import { ConfigComponent } from './config.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', component: ConfigComponent },

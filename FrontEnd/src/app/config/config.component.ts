@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { 
+import {
   PoCheckboxGroupOption,
   PoNotificationService,
   PoToasterOrientation,
-  PoToasterType } from '@po-ui/ng-components';
+  PoToasterType
+} from '@po-ui/ng-components';
 import { ConfigService } from 'src/core/config/config.service';
 import { environment } from 'src/environments/environment';
 import { ConfigBind } from '../Shared/Models/config-bind.model';
@@ -15,7 +16,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./config.component.css']
 })
 export class ConfigComponent implements OnInit {
-  config : ConfigBind;
+  config: ConfigBind;
   urlendpoint: string;
   pathendpoint: string;
   idacesso: string;
@@ -30,57 +31,57 @@ export class ConfigComponent implements OnInit {
 
 
   public readonly reprocOptions: Array<PoCheckboxGroupOption> = [
-    { label: 'Reprocessar NSR',value: "reproc" }
+    { label: 'Reprocessar NSR', value: 'reproc' }
   ];
-  
+
   constructor(
     private configService: ConfigService,
     private notification: PoNotificationService,
     private router: Router
   ) { }
-  
-  ngOnInit() {
+
+  ngOnInit(): void {
     this.GetConfig();
   }
 
-  public async Update() {
+  public async Update(): Promise<void> {
     this.config.EndPointUrl = this.urlendpoint;
-    this.config.EndPointPath = this.pathendpoint
+    this.config.EndPointPath = this.pathendpoint;
     this.config.ConnectionId = this.idacesso;
     this.config.EndPointDomainName = this.domacesso;
-    this.config.EndPointUserName = this.userendpoint; 
+    this.config.EndPointUserName = this.userendpoint;
     this.config.EndPointPassword = this.senhaendpoint;
     this.config.EndPointPathDeviceList = this.pathdevice;
     this.config.EndPointPathRecordList = this.pathclockin;
     this.config.OrganizationName = this.nomeorg;
     this.config.ApiToken = this.codtoken;
     this.config.reprocessNSR = false;
-    if (this.reproc[0] == "reproc" )
+    if (this.reproc[0] === 'reproc') {
       this.config.reprocessNSR = true;
-     
-     await this.configService.update(this.config);
-     this.showSuccessToaster("Configurações salvas com sucesso!");
-     this.router.navigate(['../home'])
+    }
+    await this.configService.update(this.config);
+    this.showSuccessToaster('Configurações salvas com sucesso!');
+    this.router.navigate(['../home']);
   }
-  
-  private async GetConfig() {
-  
-      this.config = await this.configService.getConfig();
-  
-      this.urlendpoint = this.config.EndPointUrl;
-      this.pathendpoint = this.config.EndPointPath;
-      this.idacesso = this.config.ConnectionId;
-      this.domacesso = this.config.EndPointDomainName;
-      this.userendpoint = this.config.EndPointUserName;
-      this.senhaendpoint = this.config.EndPointPassword;
-      this.pathdevice = this.config.EndPointPathDeviceList;
-      this.pathclockin = this.config.EndPointPathRecordList;
-      this.nomeorg = this.config.OrganizationName;
-      this.codtoken = this.config.ApiToken;
-      this.reproc = [];
-      if (this.config.reprocessNSR)
-        this.reproc = ['reproc'];
-      
+
+  private async GetConfig(): Promise<void> {
+
+    this.config = await this.configService.getConfig();
+
+    this.urlendpoint = this.config.EndPointUrl;
+    this.pathendpoint = this.config.EndPointPath;
+    this.idacesso = this.config.ConnectionId;
+    this.domacesso = this.config.EndPointDomainName;
+    this.userendpoint = this.config.EndPointUserName;
+    this.senhaendpoint = this.config.EndPointPassword;
+    this.pathdevice = this.config.EndPointPathDeviceList;
+    this.pathclockin = this.config.EndPointPathRecordList;
+    this.nomeorg = this.config.OrganizationName;
+    this.codtoken = this.config.ApiToken;
+    this.reproc = [];
+    if (this.config.reprocessNSR)
+      this.reproc = ['reproc'];
+
   }
 
   private showSuccessToaster(message: string): void {
@@ -93,7 +94,7 @@ export class ConfigComponent implements OnInit {
     });
   }
 
-  Voltar(){
-    this.router.navigate(['../home'])
+  Voltar(): void {
+    this.router.navigate(['../home']);
   }
 }
