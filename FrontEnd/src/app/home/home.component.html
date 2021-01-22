@@ -46,7 +46,7 @@
 
       <po-divider></po-divider>
 
-      <po-input class="po-md-6" [(ngModel)]="filter" p-placeholder="Busca por descrição" p-icon="po-icon po-icon-search" (p-blur)=search($event)></po-input>
+      <po-input class="po-md-6" [(ngModel)]="filter" p-placeholder="Busca por descrição" p-icon="po-icon po-icon-search" (p-change)=search($event)></po-input>
       <po-button class="po-md-6  po-sm-12" [p-disabled]="!buttonenable" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
 
       <po-table

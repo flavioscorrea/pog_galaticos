@@ -58,13 +58,20 @@ export class HomeComponent implements OnInit {
 
   private async GetDash() {
     this.LoaderShow();
-    const dash = await this.infoDevices.getDashboard();
-    this.LoaderHide();
-    this.reset();
-    this.totalDevices = dash.totalDevices;
-    this.totalMark = dash.total;
-    this.items = dash.items;
-    this.hasNext = dash.hasNext;
+    try {
+      const dash = await this.infoDevices.getDashboard();
+      this.LoaderHide();
+      this.reset();
+      this.totalDevices = dash.totalDevices;
+      this.totalMark = dash.total;
+      this.items = dash.items;
+      this.hasNext = dash.hasNext;
+
+    } catch (ex) {
+      this.LoaderHide();
+      this.showErrorToaster(ex.error.errorMessage);
+    }
+
   }
 
   setInitialCurrentPage(): void {
@@ -97,11 +104,12 @@ export class HomeComponent implements OnInit {
 
       this.LoaderHide();
       this.showSuccessToaster("Marcações importadas com sucesso!");
-      
+
       await this.GetDash();
-      
-    } catch (error) {
-      throw error;
+
+    } catch (ex) {
+      this.LoaderHide();
+      this.showErrorToaster(ex.error.errorMessage);
     }
 
   }
@@ -127,16 +135,21 @@ export class HomeComponent implements OnInit {
 
   async getAll(reset = false): Promise<void> {
     this.LoaderShow();
-    if (reset) 
+    if (reset)
       this.reset();
 
-    const { items, hasNext } = await this.infoDevices.getItems(this.filter, this.currentPage);
-    this.items = this.items.concat(items);
-    this.hasNext = hasNext;
-    this.LoaderHide();
+    try {
+      const { items, hasNext } = await this.infoDevices.getItems(this.filter, this.currentPage);
+      this.items = this.items.concat(items);
+      this.hasNext = hasNext;
+      this.LoaderHide();
+    } catch (ex) {
+      this.LoaderHide();
+      this.showErrorToaster(ex.error.errorMessage);
+    }
   }
 
-  private reset(){
+  private reset() {
     this.currentPage = 1;
     this.items = [];
   }
@@ -152,6 +165,16 @@ export class HomeComponent implements OnInit {
       message,
       orientation: PoToasterOrientation.Top,
       type: PoToasterType.Success,
+      position: 0,
+      duration: environment.toasterDuration,
+    });
+  }
+
+  private showErrorToaster(message: string): void {
+    this.poNotification.createToaster({
+      message,
+      orientation: PoToasterOrientation.Bottom,
+      type: PoToasterType.Error,
       position: 0,
       duration: environment.toasterDuration,
     });
