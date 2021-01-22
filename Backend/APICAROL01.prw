@@ -213,11 +213,13 @@ EndIf
 For nI := 1 to Len(aDisps[3])
 	aDados := fMarcBusc(aDisps[3][nI][1],,,.F.,,.T.)
 	If aDados[1]
-		oItem  := &cJsonObj
-		oItem["deviceCode"] 		:= aDisps[3][nI][1]
-		oItem["deviceDescription"] 	:= aDisps[3][nI][2]
-		oItem["count"] 				:= aDados[4]
-		aadd(aItem,oItem)
+		If nI <= Self:pageSize
+			oItem  := &cJsonObj
+			oItem["deviceCode"] 		:= aDisps[3][nI][1]
+			oItem["deviceDescription"] 	:= aDisps[3][nI][2]
+			oItem["count"] 				:= aDados[4]
+			aadd(aItem,oItem)
+		EndIf
 		nTotalMarc += aDados[4]
 	EndIf
 Next	
