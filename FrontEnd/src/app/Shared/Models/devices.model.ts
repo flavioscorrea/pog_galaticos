@@ -19,3 +19,7 @@ export interface TotalDevices {
    hasNext: boolean;
    items: Array<Devices>;
 }
+
+export interface configured {
+   lConfigured: boolean;
+ }

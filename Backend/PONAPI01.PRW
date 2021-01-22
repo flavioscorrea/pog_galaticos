@@ -708,7 +708,7 @@ If lErro
 	If aParam[13]
 		aAdd( aLog[1], "  MV_APICL0A: " + aParam[12] )	
 	EndIf
-	aAdd( aLog[1], "  MV_APICL0B: " + aParam[14] )	
+	aAdd( aLog[1], "  MV_APICL0B: " + cValToChar(aParam[14]) )	
 
 	aAdd(aRetorno,lSucess)
 	aAdd(aRetorno,Nil)
@@ -870,7 +870,7 @@ If !lApiToken
 		If aParam[13]
 			aAdd( aLog[1], "  MV_APICL0A: " + aParam[12] )
 		EndIf
-		aAdd( aLog[1], "  MV_APICL0B: " + aParam[14] )
+		aAdd( aLog[1], "  MV_APICL0B: " + cValToChar(aParam[14]) )
 
 		If !Empty(cRetCarol)
 			aAdd( aLog[1], "")

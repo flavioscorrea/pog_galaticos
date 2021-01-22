@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { URL_API } from 'src/app/app.api';
 import { Observable } from 'rxjs';
 import { TotvsPage } from 'src/app/Shared/Models/totvspage.model';
-import { Devices, DevicesIntegration, TotalDevices } from 'src/app/Shared/Models/devices.model';
+import { Devices, DevicesIntegration, TotalDevices, configured } from 'src/app/Shared/Models/devices.model';
 import { IntegrationReturn } from 'src/app/Shared/Models/integration_return.model';
 
 @Injectable({
@@ -23,5 +23,8 @@ export class IntegrationService {
 
   getDashBoard(): Observable<TotalDevices> {
     return this.http.get<TotalDevices>(`${URL_API}/integrationcarolclockin/devices/markings`);
+  }
+  getConfig(): Promise<configured> {
+    return this.http.get<configured>(`${URL_API}/integrationcarolclockin/config/configured`).toPromise();
   }
 }

@@ -54,13 +54,19 @@ export class HomeComponent implements OnInit {
   private async GetDash(): Promise<void> {
     this.LoaderShow();
     try {
-      const dash = await this.infoDevices.getDashboard();
-      this.LoaderHide();
-      this.reset();
-      this.totalDevices = dash.totalDevices;
-      this.totalMark = dash.total;
-      this.items = dash.items;
-      this.hasNext = dash.hasNext;
+      const lConfig = await this.infoDevices.getConfig();
+      if(lConfig.lConfigured = false){
+          alert('Parâmetros de integração não preenchidos');
+          this.router.navigate(['/config'])
+      }else {
+        const dash = await this.infoDevices.getDashboard();
+        this.LoaderHide();
+        this.reset();
+        this.totalDevices = dash.totalDevices;
+        this.totalMark = dash.total;
+        this.items = dash.items;
+        this.hasNext = dash.hasNext;
+      }
 
     } catch (ex) {
       this.LoaderHide();

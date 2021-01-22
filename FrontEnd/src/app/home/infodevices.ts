@@ -43,4 +43,10 @@ export class InfoDevices {
       .toPromise();
     return result;
   }
+
+  async getConfig() {
+    var result = await this.integrationService
+      .getConfig();
+      return result;
+  }
 }
