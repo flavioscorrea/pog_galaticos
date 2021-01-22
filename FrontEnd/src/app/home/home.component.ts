@@ -54,14 +54,6 @@ export class HomeComponent implements OnInit {
   private async GetDash(): Promise<void> {
     this.LoaderShow();
     try {
-      const lConfig = await this.infoDevices.getConfig();
-      if(!lConfig.lConfigured){
-        this.poDialog.alert({
-          title: 'AtenÃ§Ã£o',
-          message: 'ParÃ¢metros de integraÃ§Ã£o nÃ£o preenchidos, serÃ¡ aberta a tela para configuraÃ§Ã£o.'
-        });
-         this.router.navigate(['/config'])
-      }else {
         const dash = await this.infoDevices.getDashboard();
         this.LoaderHide();
         this.reset();
@@ -69,14 +61,22 @@ export class HomeComponent implements OnInit {
         this.totalMark = dash.total;
         this.items = dash.items;
         this.hasNext = dash.hasNext;
-      }
 
     } catch (ex) {
       this.LoaderHide();
       this.showErrorToaster(ex.error.errorMessage);
+
+      const lConfig = await this.infoDevices.getConfig();
+      if(!lConfig.lConfigured){
+        this.poDialog.alert({
+          title: 'Atenção',
+          message: 'Parâmetros de integração não preenchidos, será aberta a tela para configuração.'
+        });
+         this.router.navigate(['/config'])
     }
 
   }
+}
 
   setInitialCurrentPage(): void {
     this.currentPage = 1;
@@ -87,7 +87,7 @@ export class HomeComponent implements OnInit {
     const selectedItems = this.poTable.getSelectedRows();
     if (selectedItems.length > 0) {
       this.poDialog.confirm({
-        title: 'IntegraÃ§Ã£o',
+        title: 'Integração',
         message: `Integrar ${selectedItems.length} dispositivos?`,
         confirm: () => this.confirmItems(selectedItems),
         cancel: () => { }
@@ -103,11 +103,11 @@ export class HomeComponent implements OnInit {
     });
     this.items.forEach(item => (item.$selected = false));
     try {
-      this.LoaderShow('Integrando marcaÃ§Ãµes');
+      this.LoaderShow('Integrando marcações');
       const result = await this.infoDevices.integrationItems(markings);
 
       this.LoaderHide();
-      this.showSuccessToaster('MarcaÃ§Ãµes importadas com sucesso!');
+      this.showSuccessToaster('Marcações importadas com sucesso!');
 
       await this.GetDash();
 
