@@ -159,30 +159,36 @@ EndIf
 
 oCount:fromJson(aDisps[2])
 nTotal := oCount["totalHits"]
+
 For nI := 1 to nTotalDisp
 	aDados := fMarcBusc(aDisps[3][nI][1],,,.F.,,.T.)
 	If aDados[1]
 		oItem  := &cJsonObj
-		oItem["deviceCode"] := aDisps[3][nI][1]
-		oItem["deviceDescription"] := aDisps[3][nI][2]
-		oItem["count"] := aDados[4]
+		oItem["deviceCode"] 		:= aDisps[3][nI][1]
+		oItem["deviceDescription"] 	:= aDisps[3][nI][2]
+		oItem["count"] 				:= aDados[4]
 		aadd(aItem,oItem)
 	EndIf
 Next	
 
-oRet["hasNext"] :=(Self:page * Self:pageSize) < nTotal
-oRet["items"] := aItem
+oRet["hasNext"] := (Self:page * Self:pageSize) < nTotal
+oRet["items"] 	:= aItem
 
 cJson := FWJsonSerialize(oRet, .F., .F., .T.)
 Self:SetResponse(cJson)
 
 Return( .t. )
 
-WSMETHOD GET fTotalMarkings WSREST IntegrationCarolClockin
-Local oRet		 := JsonObject():New()
+WSMETHOD GET fTotalMarkings WSRECEIVE pageSize WSREST IntegrationCarolClockin
+Local cJsonObj   := "JsonObject():New()"
+Local oCount	 := &cJsonObj
+Local oItem		 := &cJsonObj
+Local oRet		 := &cJsonObj
 Local nI 		 := 0
 Local adados 	 := {}
 Local aDisps  	 := {}
+Local aItem  	 := {}
+Local nTotal 	 := 0
 Local nTotalMarc := 0
 
 Private aLog		:= { {} }
@@ -190,9 +196,16 @@ Private lApiToken	:= .F.
 Private lGeraTokn	:= .F.
 Private lTemRR1		:= .F.
 
+DEFAULT Self:pageSize 	:= PAGESIZE_DEFAULT
+
 aDisps := fDispBusc()
 
-If Empty(aDisps)
+If !aDisps[1]
+	SetRestFault(404,EncodeUTF8(NoAcento(OemToAnsi("Erro de comunicação com Carol Clock in"))))
+	Return .F.
+EndIf
+
+If Empty(aDisps[3])
 	SetRestFault(404,EncodeUTF8(NoAcento(OemToAnsi("Dispositivos não cadastrados"))))
 	Return .F.
 EndIf
@@ -200,12 +213,19 @@ EndIf
 For nI := 1 to Len(aDisps[3])
 	aDados := fMarcBusc(aDisps[3][nI][1],,,.F.,,.T.)
 	If aDados[1]
+		oItem  := &cJsonObj
+		oItem["deviceCode"] 		:= aDisps[3][nI][1]
+		oItem["deviceDescription"] 	:= aDisps[3][nI][2]
+		oItem["count"] 				:= aDados[4]
+		aadd(aItem,oItem)
 		nTotalMarc += aDados[4]
 	EndIf
 Next	
 
-oRet["total"] := nTotalMarc
-oRet["totalDevices"] := Len(aDisps[3])
+oRet["total"] 			:= nTotalMarc
+oRet["totalDevices"] 	:= Len(aDisps[3])
+oRet["hasNext"] 		:= (1 * Self:pageSize) < Len(aDisps[3])
+oRet["items"] 			:= aItem
 
 cJson := FWJsonSerialize(oRet, .F., .F., .T.)
 Self:SetResponse(cJson)
