@@ -48,7 +48,7 @@
 
       <div class="po-row" style="position: relative; !important ">  
         <po-input class="po-md-4  po-sm-12" [(ngModel)]="filter" p-placeholder="Busca por descrição" p-icon="po-icon po-icon-search" (p-change)=search($event)></po-input>
-        <po-button class="po-md-3" style="position: absolute; right:0% ; top:15%; !important " [p-disabled]="!buttonenable" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
+        <po-button class="po-md-2" style="position: absolute; right:0% ; top:15%; !important " [p-disabled]="!buttonenable" p-icon="po-icon po-icon-clock" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
       </div>
 
       <po-table
