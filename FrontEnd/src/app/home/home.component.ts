@@ -28,8 +28,8 @@ export class HomeComponent implements OnInit {
   total: number = 0;
   totalExpanded = 0;
   buttonenable = false;
-  totalDevices: number = 0;
-  totalMark: number = 0;
+  totalDevices: number;
+  totalMark: number;
   hasNext: boolean;
   currentPage: number;
   filter: string;
@@ -95,7 +95,7 @@ export class HomeComponent implements OnInit {
       const result = await this.infoDevices.integrationItems(markings);
 
       this.LoaderHide();
-      this.showSuccessToaster("Marcações importados com sucesso!");
+      this.showSuccessToaster("Marcações importadas com sucesso!");
       
       await this.GetDash();
       await this.getAll(true);

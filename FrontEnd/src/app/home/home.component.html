@@ -19,13 +19,34 @@
 
       <po-divider></po-divider>
       
-      <po-input class="po-md-6" name="totalDevices" [(ngModel)]="totalDevices" p-label="Total de dispositivos">
-      </po-input>
+      <div class="po-row">    
+        <po-widget class="po-lg-6 po-xl-6 po-md-12 po-sm-12 space-20" p-height="88">
+        <div class="po-font-text-large-bold po-text-center">
+            <p>
+              Total de dispositivos
+            </p>
+          <br/>
+          <p>
+            {{ totalDevices }}
+          </p>
+        </div>
+        </po-widget>
+        <po-widget class="po-lg-6 po-xl-6 po-md-12 po-sm-12 space-20" p-height="88">
+          <div class="po-font-text-large-bold po-text-center">
+              <p>
+                Total de marcações
+              </p>
+            <br/>
+            <p>
+              {{ totalMark }}
+            </p>
+          </div>
+        </po-widget>
+      </div>
 
-      <po-input class="po-md-6" name="totalMark" [(ngModel)]="totalMark" p-label="Total de marcações">
-      </po-input>
+      <po-divider></po-divider>
 
-      <po-input class="po-md-6" [(ngModel)]="filter" p-placeholder="Busca por nome" p-icon="po-icon po-icon-search" (p-blur)=search($event)></po-input>
+      <po-input class="po-md-6" [(ngModel)]="filter" p-placeholder="Busca por descrição" p-icon="po-icon po-icon-search" (p-blur)=search($event)></po-input>
       <po-button class="po-md-6  po-sm-12" [p-disabled]="!buttonenable" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
 
       <po-table
