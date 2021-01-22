@@ -7,7 +7,7 @@
     </div>
     <div class="po-pull-right">
       
-      <a href="config" p-tooltip="Configurações">
+      <a routerLink="/config" p-tooltip="Configura��es">
         <!--<span class="po-icon po-icon-settings"></span>-->
         <img class="fixed-background" src="../../../assets/img/engrenagem.png" height="30" width="30">
       </a>
@@ -46,8 +46,10 @@
 
       <po-divider></po-divider>
 
-      <po-input class="po-md-6" [(ngModel)]="filter" p-placeholder="Busca por descrição" p-icon="po-icon po-icon-search" (p-change)=search($event)></po-input>
-      <po-button class="po-md-6  po-sm-12" [p-disabled]="!buttonenable" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
+      <div class="po-row" style="position: relative; !important ">  
+        <po-input class="po-md-4  po-sm-12" [(ngModel)]="filter" p-placeholder="Busca por descrição" p-icon="po-icon po-icon-search" (p-change)=search($event)></po-input>
+        <po-button class="po-md-3" style="position: absolute; right:0% ; top:15%; !important " [p-disabled]="!buttonenable" p-label="Integrar" (p-click)="integrar()" p-type="primary"> </po-button>
+      </div>
 
       <po-table
         p-container
