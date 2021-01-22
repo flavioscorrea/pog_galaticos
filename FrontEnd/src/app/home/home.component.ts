@@ -50,8 +50,6 @@ export class HomeComponent implements OnInit {
 
     this.setInitialCurrentPage();
     await this.GetDash();
-    await this.getAll();
-
   }
 
   ngOnDestroy(): void {
@@ -60,10 +58,13 @@ export class HomeComponent implements OnInit {
 
   private async GetDash() {
     this.LoaderShow();
-    const { totalDevices, total } = await this.infoDevices.getDashboard();
-    this.totalDevices = totalDevices;
+    const dash = await this.infoDevices.getDashboard();
     this.LoaderHide();
-    this.totalMark = total;
+    this.reset();
+    this.totalDevices = dash.totalDevices;
+    this.totalMark = dash.total;
+    this.items = dash.items;
+    this.hasNext = dash.hasNext;
   }
 
   setInitialCurrentPage(): void {
@@ -98,8 +99,7 @@ export class HomeComponent implements OnInit {
       this.showSuccessToaster("Marcações importadas com sucesso!");
       
       await this.GetDash();
-      await this.getAll(true);
-
+      
     } catch (error) {
       throw error;
     }
@@ -127,16 +127,19 @@ export class HomeComponent implements OnInit {
 
   async getAll(reset = false): Promise<void> {
     this.LoaderShow();
-    if (reset) {
-      this.currentPage = 1;
-      this.items = [];
-    }
+    if (reset) 
+      this.reset();
+
     const { items, hasNext } = await this.infoDevices.getItems(this.filter, this.currentPage);
     this.items = this.items.concat(items);
     this.hasNext = hasNext;
     this.LoaderHide();
   }
 
+  private reset(){
+    this.currentPage = 1;
+    this.items = [];
+  }
   enablebutton() {
     const selectedItems = this.poTable.getSelectedRows();
     this.buttonenable = false;

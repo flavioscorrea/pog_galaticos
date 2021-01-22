@@ -604,7 +604,7 @@ Local oClient 	:= nil 																//OBJETO REST QUE SERÁ USADO NA REQUISIÇÃO
 			If aParams[13]
 				aAdd( aLog[1], "  MV_APICL0A: " + aParams[12] )
 			EndIf
-			aAdd( aLog[1], "  MV_APICL0B: " + aParams[14] )
+			aAdd( aLog[1], "  MV_APICL0B: " + cvaltochar(aParams[14]) )
 
 			aAdd( aLog[1], "")
 			aAdd( aLog[1], STR0033)//"Erro completo retornado pela API da Carol: "

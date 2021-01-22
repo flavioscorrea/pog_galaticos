@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { PoTableColumn, PoTableDetail } from '@po-ui/ng-components';
 import { IntegrationService } from 'src/core/config/integration.service';
-import { Devices_integration } from '../Shared/Models/devices.model';
+import { Devices_integration, Total_Devices } from '../Shared/Models/devices.model';
 
 @Injectable({ providedIn: 'root' })
 export class InfoDevices {
@@ -36,9 +36,9 @@ export class InfoDevices {
   }
 
   async getDashboard() {
-    const { totalDevices, total } = await this.integrationService
+    var result = await this.integrationService
       .getDashBoard()
       .toPromise();
-      return { totalDevices, total };
+      return result;
   }
 }

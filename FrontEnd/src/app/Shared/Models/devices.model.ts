@@ -16,4 +16,6 @@ export interface Devices {
   export interface Total_Devices {
    totalDevices: number;
    total: number;
+   hasNext: boolean;
+   items: Array<Devices>;
   }
