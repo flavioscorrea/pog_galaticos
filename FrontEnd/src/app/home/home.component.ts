@@ -56,8 +56,11 @@ export class HomeComponent implements OnInit {
     try {
       const lConfig = await this.infoDevices.getConfig();
       if(!lConfig.lConfigured){
-          alert('Par�metros de integra��o n�o preenchidos');
-          this.router.navigate(['/config'])
+        this.poDialog.alert({
+          title: 'AtenÃ§Ã£o',
+          message: 'ParÃ¢metros de integraÃ§Ã£o nÃ£o preenchidos, serÃ¡ aberta a tela para configuraÃ§Ã£o.'
+        });
+         this.router.navigate(['/config'])
       }else {
         const dash = await this.infoDevices.getDashboard();
         this.LoaderHide();
@@ -84,7 +87,7 @@ export class HomeComponent implements OnInit {
     const selectedItems = this.poTable.getSelectedRows();
     if (selectedItems.length > 0) {
       this.poDialog.confirm({
-        title: 'Integração',
+        title: 'IntegraÃ§Ã£o',
         message: `Integrar ${selectedItems.length} dispositivos?`,
         confirm: () => this.confirmItems(selectedItems),
         cancel: () => { }
@@ -100,11 +103,11 @@ export class HomeComponent implements OnInit {
     });
     this.items.forEach(item => (item.$selected = false));
     try {
-      this.LoaderShow('Integrando marcações');
+      this.LoaderShow('Integrando marcaÃ§Ãµes');
       const result = await this.infoDevices.integrationItems(markings);
 
       this.LoaderHide();
-      this.showSuccessToaster('Marcações importadas com sucesso!');
+      this.showSuccessToaster('MarcaÃ§Ãµes importadas com sucesso!');
 
       await this.GetDash();
 
