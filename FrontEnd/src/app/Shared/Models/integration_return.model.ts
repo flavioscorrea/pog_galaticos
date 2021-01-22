@@ -1,11 +1,10 @@
 
-export interface Integration_Return {
-   devices: Array<Integration_Return_item>;
-  }
+export interface IntegrationReturn {
+   devices: Array<IntegrationReturnItem>;
+}
 
-  
-export interface Integration_Return_item {
+export interface IntegrationReturnItem {
    deviceCode: string;
    message: string;
    status: string;
-  }
+}

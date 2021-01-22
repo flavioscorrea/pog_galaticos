@@ -3,19 +3,19 @@ export interface Devices {
    deviceCode: string;
    deviceDescription: string;
    count: string;
-  }
+}
 
-  export interface Devices_integration {
-   devices: Array<device_code>;
-  }
+export interface DevicesIntegration {
+   devices: Array<DeviceCode>;
+}
 
-  export interface device_code {
+export interface DeviceCode {
    deviceCode: string;
-  }
+}
 
-  export interface Total_Devices {
+export interface TotalDevices {
    totalDevices: number;
    total: number;
    hasNext: boolean;
    items: Array<Devices>;
-  }
+}

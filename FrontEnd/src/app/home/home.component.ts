@@ -2,7 +2,6 @@ import { Component, ViewChild, OnInit } from '@angular/core';
 import {
   PoDialogService,
   PoModalComponent,
-  PoTableAction,
   PoTableColumn,
   PoTableComponent,
   PoNotificationService,
@@ -10,7 +9,7 @@ import {
   PoToasterType
 } from '@po-ui/ng-components';
 import { environment } from 'src/environments/environment';
-import { Devices_integration, device_code } from '../Shared/Models/devices.model';
+import { DevicesIntegration, DeviceCode } from '../Shared/Models/devices.model';
 import { InfoDevices } from './infodevices';
 import { Router } from '@angular/router';
 
@@ -34,7 +33,7 @@ export class HomeComponent implements OnInit {
   currentPage: number;
   filter: string;
   isHideLoading: boolean = true;
-  loaderText: string = "Carregando";
+  loaderText: string = 'Carregando';
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild(PoTableComponent, { static: true }) poTable: PoTableComponent;
@@ -50,10 +49,6 @@ export class HomeComponent implements OnInit {
 
     this.setInitialCurrentPage();
     await this.GetDash();
-  }
-
-  ngOnDestroy(): void {
-    this.LoaderHide();
   }
 
   private async GetDash() {
@@ -92,18 +87,18 @@ export class HomeComponent implements OnInit {
   }
 
   async confirmItems(selectedItems: Array<any>) {
-    var markings: Devices_integration = { devices: Array<device_code>() };
+    let markings: DevicesIntegration = { devices: Array<DeviceCode>() };
     selectedItems.forEach(item => {
-      const selected: device_code = { deviceCode: item.deviceCode };
+      const selected: DeviceCode = { deviceCode: item.deviceCode };
       markings.devices.push(selected);
     });
     this.items.forEach(item => (item.$selected = false));
     try {
-      this.LoaderShow("Integrando marcações");
+      this.LoaderShow('Integrando marcações');
       const result = await this.infoDevices.integrationItems(markings);
 
       this.LoaderHide();
-      this.showSuccessToaster("Marcações importadas com sucesso!");
+      this.showSuccessToaster('Marcações importadas com sucesso!');
 
       await this.GetDash();
 
@@ -115,7 +110,7 @@ export class HomeComponent implements OnInit {
   }
 
   config() {
-    this.router.navigate(['/config'])
+    this.router.navigate(['/config']);
   }
 
   async showMoreRegisters(): Promise<void> {
@@ -180,13 +175,13 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private LoaderShow(text: string = "Carregando") {
+  private LoaderShow(text: string = 'Carregando') {
     this.loaderText = text;
     this.isHideLoading = false;
   }
 
   private LoaderHide() {
-    this.loaderText = "Carregando";
+    this.loaderText = 'Carregando';
     this.isHideLoading = true;
   }
 }
