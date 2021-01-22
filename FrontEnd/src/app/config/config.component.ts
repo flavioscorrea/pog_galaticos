@@ -7,6 +7,7 @@ import {
 import { ConfigService } from 'src/core/config/config.service';
 import { environment } from 'src/environments/environment';
 import { ConfigBind } from '../Shared/Models/config-bind.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-config',
@@ -34,7 +35,8 @@ export class ConfigComponent implements OnInit {
   
   constructor(
     private configService: ConfigService,
-    private notification: PoNotificationService
+    private notification: PoNotificationService,
+    private router: Router
   ) { }
   
   ngOnInit() {
@@ -58,6 +60,7 @@ export class ConfigComponent implements OnInit {
      
      await this.configService.update(this.config);
      this.showSuccessToaster("Configurações salvas com sucesso!");
+     this.router.navigate(['../home'])
   }
   
   private async GetConfig() {
@@ -88,5 +91,9 @@ export class ConfigComponent implements OnInit {
       position: 0,
       duration: environment.toasterDuration,
     });
+  }
+
+  Voltar(){
+    this.router.navigate(['../home'])
   }
 }

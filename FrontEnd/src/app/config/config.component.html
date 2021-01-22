@@ -53,12 +53,13 @@
         <br>
 
 
-        <div class="po-row">
+        <div class="po-row" style="position: relative; !important ">
 
           <po-checkbox-group class="po-md-6" name="reproc" [(ngModel)]="reproc" p-label="" [p-options]="reprocOptions">
           </po-checkbox-group>
 
-          <po-button class="po-md-6" p-label="Salvar" (p-click)="Update()" p-type="primary"> </po-button>
+          <po-button class="po-md-2" p-label="Voltar" (p-click)="Voltar()"  style="position: absolute; right:18% ; top:15%; !important "> </po-button>
+          <po-button class="po-md-2" p-label="Salvar" (p-click)="Update()" p-type="primary" style="position: absolute; right:0% ; top:15%; !important "> </po-button>        
         </div>
 
       </form>
