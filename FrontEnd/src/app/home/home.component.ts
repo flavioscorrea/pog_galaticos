@@ -55,7 +55,7 @@ export class HomeComponent implements OnInit {
     this.LoaderShow();
     try {
       const lConfig = await this.infoDevices.getConfig();
-      if(lConfig.lConfigured = false){
+      if(!lConfig.lConfigured){
           alert('Parâmetros de integração não preenchidos');
           this.router.navigate(['/config'])
       }else {
