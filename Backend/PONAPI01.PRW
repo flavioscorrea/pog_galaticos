@@ -144,7 +144,7 @@ If aDisps[1] .and. Len(aDisps[nPosDados]) > 0
 
 	For nCoutDisp:= 1 To Len(aDisps[nPosDados])
 	
-		cTempDisp := aDisps[nPosDados][nCoutDisp]
+		cTempDisp := aDisps[nPosDados][nCoutDisp][1]
 		aDados := fMarcBusc(cTempDisp,cDtIni,cDtFin,lNSRInfor,cCodNSR)
 
 		If aDados[1] .AND. Len (aDados[nPosDados]) > 0		
