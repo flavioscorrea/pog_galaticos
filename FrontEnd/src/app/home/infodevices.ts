@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { PoTableColumn } from '@po-ui/ng-components';
 import { IntegrationService } from 'src/core/config/integration.service';
-import { DevicesIntegration } from '../Shared/Models/devices.model';
+import { Devices, DevicesIntegration, TotalDevices } from '../Shared/Models/devices.model';
+import { IntegrationReturnItem } from '../Shared/Models/integration_return.model';
+import { TotvsPage } from '../Shared/Models/totvspage.model';
 
 @Injectable({ providedIn: 'root' })
 export class InfoDevices {
@@ -21,21 +23,21 @@ export class InfoDevices {
     ];
   }
 
-  async getItems(filter: string, currentPage: number) {
-    const { items, hasNext } = await this.integrationService
+  async getItems(filter: string, currentPage: number): Promise<TotvsPage<Devices>> {
+    const devices: TotvsPage<Devices> = await this.integrationService
       .getDevices(filter, currentPage)
       .toPromise();
-    return { items, hasNext };
+    return devices;
   }
 
-  async integrationItems(items: DevicesIntegration) {
+  async integrationItems(items: DevicesIntegration): Promise<Array<IntegrationReturnItem>> {
     const { devices } = await this.integrationService
       .integrar(items)
       .toPromise();
     return devices;
   }
 
-  async getDashboard() {
+  async getDashboard(): Promise<TotalDevices> {
     const result = await this.integrationService
       .getDashBoard()
       .toPromise();

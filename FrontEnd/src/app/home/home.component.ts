@@ -24,16 +24,16 @@ export class HomeComponent implements OnInit {
   columns: Array<PoTableColumn> = this.infoDevices.getColumns();
   detail: any;
   items: Array<any> = [];
-  total: number = 0;
+  total = 0;
   totalExpanded = 0;
   buttonenable = false;
-  totalDevices: number;
-  totalMark: number;
-  hasNext: boolean;
-  currentPage: number;
-  filter: string;
-  isHideLoading: boolean = true;
-  loaderText: string = 'Carregando';
+  totalDevices = 0;
+  totalMark = 0;
+  hasNext = false;
+  currentPage = 1;
+  filter = '';
+  isHideLoading = true;
+  loaderText = 'Carregando';
 
   @ViewChild(PoModalComponent, { static: true }) poModal: PoModalComponent;
   @ViewChild(PoTableComponent, { static: true }) poTable: PoTableComponent;
@@ -51,7 +51,7 @@ export class HomeComponent implements OnInit {
     await this.GetDash();
   }
 
-  private async GetDash() {
+  private async GetDash(): Promise<void> {
     this.LoaderShow();
     try {
       const dash = await this.infoDevices.getDashboard();
@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
     this.filter = '';
   }
 
-  integrar() {
+  integrar(): void {
     const selectedItems = this.poTable.getSelectedRows();
     if (selectedItems.length > 0) {
       this.poDialog.confirm({
@@ -86,8 +86,8 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  async confirmItems(selectedItems: Array<any>) {
-    let markings: DevicesIntegration = { devices: Array<DeviceCode>() };
+  async confirmItems(selectedItems: Array<DeviceCode>): Promise<void> {
+    const markings: DevicesIntegration = { devices: Array<DeviceCode>() };
     selectedItems.forEach(item => {
       const selected: DeviceCode = { deviceCode: item.deviceCode };
       markings.devices.push(selected);
@@ -109,7 +109,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  config() {
+  config(): void {
     this.router.navigate(['/config']);
   }
 
@@ -118,9 +118,9 @@ export class HomeComponent implements OnInit {
   }
 
   async getNextPage(): Promise<void> {
-    if (this.hasNext)
+    if (this.hasNext) {
       this.currentPage++;
-
+    }
     await this.getAll();
   }
 
@@ -130,8 +130,9 @@ export class HomeComponent implements OnInit {
 
   async getAll(reset = false): Promise<void> {
     this.LoaderShow();
-    if (reset)
+    if (reset) {
       this.reset();
+    }
 
     try {
       const { items, hasNext } = await this.infoDevices.getItems(this.filter, this.currentPage);
@@ -144,15 +145,16 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  private reset() {
+  private reset(): void {
     this.currentPage = 1;
     this.items = [];
   }
-  enablebutton() {
+  enablebutton(): void {
     const selectedItems = this.poTable.getSelectedRows();
     this.buttonenable = false;
-    if (selectedItems.length > 0)
+    if (selectedItems.length > 0) {
       this.buttonenable = true;
+    }
   }
 
   private showSuccessToaster(message: string): void {
@@ -175,12 +177,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  private LoaderShow(text: string = 'Carregando') {
+  private LoaderShow(text: string = 'Carregando'): void {
     this.loaderText = text;
     this.isHideLoading = false;
   }
 
-  private LoaderHide() {
+  private LoaderHide(): void {
     this.loaderText = 'Carregando';
     this.isHideLoading = true;
   }

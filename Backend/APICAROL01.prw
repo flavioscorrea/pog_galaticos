@@ -161,7 +161,7 @@ oCount:fromJson(aDisps[2])
 nTotal := oCount["totalHits"]
 
 For nI := 1 to nTotalDisp
-	aDados := fMarcBusc(aDisps[3][nI][1],,,.F.,,.T.)
+	aDados := fMarcBusc(aDisps[3][nI][1],,,.F.,,.F.)
 	If aDados[1]
 		oItem  := &cJsonObj
 		oItem["deviceCode"] 		:= aDisps[3][nI][1]

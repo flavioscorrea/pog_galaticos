@@ -79,8 +79,9 @@ export class ConfigComponent implements OnInit {
     this.nomeorg = this.config.OrganizationName;
     this.codtoken = this.config.ApiToken;
     this.reproc = [];
-    if (this.config.reprocessNSR)
+    if (this.config.reprocessNSR) {
       this.reproc = ['reproc'];
+    }
 
   }
 
